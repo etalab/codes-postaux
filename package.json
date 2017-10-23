@@ -22,7 +22,8 @@
   "files": [
     "LICENSE.MIT.txt",
     "codes-postaux.json",
-    "index.js"
+    "index.js",
+    "prepublish.js"
   ],
   "scripts": {
     "test": "node test.js",
