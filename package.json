@@ -21,7 +21,7 @@
   "homepage": "https://github.com/sgmap/codes-postaux",
   "files": [
     "LICENSE.MIT.txt",
-    "communes.json",
+    "codes-postaux.json",
     "index.js"
   ],
   "scripts": {

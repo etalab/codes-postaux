@@ -14,6 +14,31 @@ request('https://geo.api.gouv.fr/communes', {
     assert.ok(500 < body.length, `Too few cities (${body.length})`);
     assert.ok(body.length < 40000, `Too many cities (${body.length})`);
 
-    fs.writeFileSync('communes.json', JSON.stringify(body, null, 1));
-});
+    var index = {};
+    body.forEach(function (commune) {
+        commune.codesPostaux.forEach(function (codePostal) {
+            if (!(codePostal in index)) {
+                index[codePostal] = [];
+            }
+            index[codePostal].push({
+                nomCommune: commune.nom,
+                codeInsee: commune.code,
+                codePostal: codePostal,
+                population: commune.population,
+            });
+        });
+    });
 
+    // Sort by population
+    for (var codePostal in index) {
+        index[codePostal].sort(function (a, b) {
+            var aPopulation = a.population || 0;
+            var bPopulation = b.population || 0;
+            if (aPopulation <= bPopulation) return 1;
+            if (aPopulation >= bPopulation) return -1;
+            return 0;
+        });
+    }
+
+    fs.writeFileSync('codes-postaux.json', JSON.stringify(index, null, 1));
+});
