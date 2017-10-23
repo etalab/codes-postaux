@@ -15,10 +15,12 @@ codesPostaux.find('75001');
 
 Will return
 ```js
-[ { codeInsee: '75101',
-    nomCommune: 'Paris',
+[ { nomCommune: 'Paris',
+    codeInsee: '75056',
     codePostal: '75001',
-    population:  2229621 } ]
+    departement: { code: '75', nom: 'Paris' },
+    population: 2229621,
+    region: { code: '11', nom: 'Île-de-France' } } ]
 ```
 
 

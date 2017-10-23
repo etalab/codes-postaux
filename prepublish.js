@@ -7,7 +7,7 @@ request('https://geo.api.gouv.fr/communes', {
     json: true,
     qs: {
         boost: 'population',
-        fields: 'nom,code,codesPostaux,population',
+        fields: 'nom,code,codesPostaux,departement,population,region',
     },
 }, function (error, response, body) {
     assert.ok(response.statusCode == 200, `Response status code should be 200 (not ${response.statusCode}).`);
@@ -20,11 +20,22 @@ request('https://geo.api.gouv.fr/communes', {
             if (!(codePostal in index)) {
                 index[codePostal] = [];
             }
+            // Mitigate missing data for Saint Martin
+            var departement = commune.departement || {};
+            var region = commune.region || {};
             index[codePostal].push({
                 nomCommune: commune.nom,
                 codeInsee: commune.code,
                 codePostal: codePostal,
+                departement: {
+                    code: departement.code,
+                    nom: departement.nom,
+                },
                 population: commune.population,
+                region: {
+                    code: region.code,
+                    nom: region.nom,
+                },
             });
         });
     });
