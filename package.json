@@ -27,7 +27,8 @@
     "lint": "xo",
     "build": "node build",
     "prepublishOnly": "node build",
-    "test": "ava"
+    "test": "ava",
+    "compare": "node compare"
   },
   "dependencies": {},
   "devDependencies": {
